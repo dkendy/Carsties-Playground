@@ -1,6 +1,4 @@
-using System;
 using System.Text.Json;
-using Microsoft.VisualBasic;
 using MongoDB.Driver;
 using MongoDB.Entities;
 using SearchService.Models;
@@ -9,11 +7,16 @@ namespace SearchService.Data;
 
 public class DbInitializer
 {
-    public static async Task InitDb(WebApplication app)
+    private readonly SearchDbContext _searchDbContext;
+    public DbInitializer(SearchDbContext searchDbContext){ 
+        _searchDbContext = searchDbContext;
+    }
+    public static async Task InitDb(WebApplication app, SearchDatabaseSettings mongoDbSettings)
     {
+ 
 
-        await DB.InitAsync("SearchDb", MongoClientSettings
-        .FromConnectionString(app.Configuration.GetConnectionString("MongoDbConnection")));
+          await DB.InitAsync("SearchDb", MongoClientSettings
+        .FromConnectionString(mongoDbSettings.ConnectionString));
 
         await DB.Index<Item>()
             .Key(x => x.Make, KeyType.Text)
@@ -34,7 +37,7 @@ public class DbInitializer
             await DB.SaveAsync(items);
             
 
-        }
+        }  
 
     }
 
