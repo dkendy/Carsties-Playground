@@ -60,6 +60,20 @@ namespace AuctionService.Data.Migrations
                     b.ToTable("Auctions");
                 });
 
+            modelBuilder.Entity("AuctionService.Entities.Document", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Documents");
+                });
+
             modelBuilder.Entity("AuctionService.Entities.Item", b =>
                 {
                     b.Property<Guid>("Id")

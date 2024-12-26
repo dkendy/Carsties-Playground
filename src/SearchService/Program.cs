@@ -1,3 +1,4 @@
+using Contracts;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
@@ -17,7 +18,10 @@ builder.Services.AddMassTransit(x => {
 
     x.AddConsumersFromNamespaceContaining<AuctionCreatedConsumer>();
 
-    x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search",false));
+     x.AddConsumersFromNamespaceContaining<DocumentCreatedConsumer>();
+ 
+
+    x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search_gringo_",false));
 
     x.UsingRabbitMq((context, cfg) =>{
         cfg.ConfigureEndpoints(context);

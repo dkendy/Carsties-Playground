@@ -24,6 +24,11 @@ public class DbInitializer
             .Key(x => x.Color, KeyType.Text)
             .CreateAsync();
 
+        await DB.Index<Document>()
+            .Key(x => x.Name, KeyType.Text) 
+            .CreateAsync();
+
+
         var count = await DB.CountAsync<Item>();
 
         if(count ==0){
